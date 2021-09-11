@@ -1,0 +1,33 @@
+FROM maven:3.6-jdk-8-alpine as builder
+#RUN apk add git
+
+WORKDIR /pontus-tika-lambda
+
+COPY tika-server-wsrs-lambda/pom.xml /pontus-tika-lambda/pom.xml
+
+RUN mvn -q -B verify --fail-never
+#COPY . /tr-data-matcher/
+#RUN mvn -q package -U -DskipTests
+
+#RUN git clone  --depth 1 --single-branch  --branch master https://github.com/pontusvision/pontus-tika-lambda.git && \
+#RUN mvn dependency:resolve
+
+COPY ./tika-server-wsrs-lambda/ /pontus-tika-lambda/
+#RUN mvn clean package install -DskipTests
+#RUN mvn compile  dependency:copy-dependencies  -DincludeScope=runtime
+RUN mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn  install 
+
+#RUN cd /root/.m2/repository && for i in *; do if [[ "com" == ${DOLLAR}i || "pv-gdpr" == ${DOLLAR}i ]]; then echo skip ; else rm -r ${DOLLAR}i; fi; done
+
+
+
+FROM public.ecr.aws/lambda/java:8 as FINAL
+
+ARG LAMBDA_TASK_ROOT=/var/task
+ENV LAMBDA_TASK_ROOT=${DOLLAR}{LAMBDA_TASK_ROOT}
+USER 1000
+
+COPY --chown=1000:1000 --from=builder /pontus-tika-lambda/target/tika-server-*.jar  ${DOLLAR}{LAMBDA_TASK_ROOT}/lib/
+
+CMD [ "com.pontusvision.tika.LambdaHandler::handleRequest" ]
+
