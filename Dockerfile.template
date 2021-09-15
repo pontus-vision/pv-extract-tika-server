@@ -22,6 +22,7 @@ RUN mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTra
 
 
 FROM public.ecr.aws/lambda/java:8 as FINAL
+RUN yum -y update 
 
 ARG LAMBDA_TASK_ROOT=/var/task
 ENV LAMBDA_TASK_ROOT=${DOLLAR}{LAMBDA_TASK_ROOT}

@@ -19,12 +19,11 @@ package com.pontusvision.tika.resource;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -82,14 +81,17 @@ import org.apache.tika.server.core.ServerStatus;
 import org.apache.tika.server.core.TikaServerConfig;
 import org.apache.tika.server.core.TikaServerParseException;
 import org.apache.tika.utils.ExceptionUtils;
+import sun.misc.BASE64Decoder;
 
 @Path("/tika")
 public class TikaResource {
     protected static final String HANDLER_TYPE_PARAM = "handler";
     protected static final BasicContentHandlerFactory.HANDLER_TYPE DEFAULT_HANDLER_TYPE =
         BasicContentHandlerFactory.HANDLER_TYPE.XML;
+    public  static Tika tika = new Tika();
+
     public static final String GREETING =
-            "This is Tika Server (" + new Tika().toString() + "). Please PUT\n";
+            "This is Tika Server (" + tika.toString() + "). Please PUT\n";
     private static final String META_PREFIX = "meta_";
     private static final Logger LOG = LoggerFactory.getLogger(TikaResource.class);
     private static Pattern ALLOWABLE_HEADER_CHARS = Pattern.compile("(?i)^[-/_+\\.A-Z0-9 ]+$");
@@ -450,7 +452,34 @@ public class TikaResource {
         return produceText(getInputStream(is, metadata, httpHeaders), metadata,
                 httpHeaders.getRequestHeaders(), info);
     }
+    @PUT
+    @Consumes("*/*")
+    @Produces("text/plain")
+    @Path("text")
+    public String  getTextFromText(final InputStream is, @Context HttpHeaders httpHeaders,
+                                                @Context final UriInfo info) throws IOException, TikaException {
+        
+        String retVal =  tika.parseToString(is);
 
+        return retVal;
+
+
+    }
+    @PUT
+    @Consumes("*/*")
+    @Produces("text/plain")
+    @Path("base64")
+    public StreamingOutput getTextFromBase64Doc(final InputStream is, @Context HttpHeaders httpHeaders,
+                                   @Context final UriInfo info) throws IOException {
+        BASE64Decoder decoder = new BASE64Decoder();
+        byte[] decodedBytes = decoder.decodeBuffer(is);
+        InputStream is2 = new ByteArrayInputStream(decodedBytes);
+
+
+        final Metadata metadata = new Metadata();
+        return produceText(getInputStream(is2, metadata, httpHeaders), metadata,
+            httpHeaders.getRequestHeaders(), info);
+    }
     public StreamingOutput produceText(final InputStream is, final Metadata metadata,
                                        MultivaluedMap<String, String> httpHeaders,
                                        final UriInfo info) {
