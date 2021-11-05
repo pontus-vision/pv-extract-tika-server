@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-package com.pontusvision.tika.resource;
+package org.apache.tika.server.core;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -74,12 +72,6 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.apache.tika.sax.ExpandedTitleContentHandler;
 import org.apache.tika.sax.RichTextContentHandler;
 import org.apache.tika.sax.boilerpipe.BoilerpipeContentHandler;
-import org.apache.tika.server.core.CompositeParseContextConfig;
-import org.apache.tika.server.core.InputStreamFactory;
-import org.apache.tika.server.core.ParseContextConfig;
-import org.apache.tika.server.core.ServerStatus;
-import org.apache.tika.server.core.TikaServerConfig;
-import org.apache.tika.server.core.TikaServerParseException;
 import org.apache.tika.utils.ExceptionUtils;
 import sun.misc.BASE64Decoder;
 
@@ -458,7 +450,7 @@ public class TikaResource {
     @Path("text")
     public String  getTextFromText(final InputStream is, @Context HttpHeaders httpHeaders,
                                                 @Context final UriInfo info) throws IOException, TikaException {
-        
+
         String retVal =  tika.parseToString(is);
 
         return retVal;
@@ -483,6 +475,7 @@ public class TikaResource {
     public StreamingOutput produceText(final InputStream is, final Metadata metadata,
                                        MultivaluedMap<String, String> httpHeaders,
                                        final UriInfo info) {
+
         final Parser parser = createParser();
         final ParseContext context = new ParseContext();
 

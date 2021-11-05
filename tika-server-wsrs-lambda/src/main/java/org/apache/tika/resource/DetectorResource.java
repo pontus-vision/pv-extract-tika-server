@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +27,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.tika.server.core.TikaResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,13 +54,13 @@ public class DetectorResource {
                          @Context final UriInfo info) {
         Metadata met = new Metadata();
 
-        String filename = com.pontusvision.tika.resource.TikaResource.detectFilename(httpHeaders.getRequestHeaders());
+        String filename = TikaResource.detectFilename(httpHeaders.getRequestHeaders());
         LOG.info("Detecting media type for Filename: {}", filename);
         met.add(TikaCoreProperties.RESOURCE_NAME_KEY, filename);
         long taskId = serverStatus.start(ServerStatus.TASK.DETECT, filename);
 
         try (TikaInputStream tis = TikaInputStream
-                .get(com.pontusvision.tika.resource.TikaResource.getInputStream(is, met, httpHeaders))) {
+                .get(TikaResource.getInputStream(is, met, httpHeaders))) {
             return TikaResource.getConfig().getDetector().detect(tis, met).toString();
         } catch (IOException e) {
             LOG.warn("Unable to detect MIME type for file. Reason: {} ({})", e.getMessage(),

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.parser.ParserDecorator;
 import org.apache.tika.server.core.HTMLHelper;
+import org.apache.tika.server.core.TikaResource;
 
 /**
  * <p>Provides details of all the {@link Parser}s registered with

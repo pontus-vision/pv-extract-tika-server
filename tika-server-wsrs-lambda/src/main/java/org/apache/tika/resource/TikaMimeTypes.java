@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +34,7 @@ import org.apache.tika.mime.MediaTypeRegistry;
 import org.apache.tika.parser.CompositeParser;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.server.core.HTMLHelper;
+import org.apache.tika.server.core.TikaResource;
 
 /**
  * <p>Provides details of all the mimetypes known to Apache Tika,
@@ -148,7 +149,7 @@ public class TikaMimeTypes {
     }
 
     protected List<MediaTypeDetails> getMediaTypes() {
-        MediaTypeRegistry registry = com.pontusvision.tika.resource.TikaResource.getConfig().getMediaTypeRegistry();
+        MediaTypeRegistry registry = TikaResource.getConfig().getMediaTypeRegistry();
         Map<MediaType, Parser> parsers =
                 ((CompositeParser) TikaResource.getConfig().getParser()).getParsers();
         List<MediaTypeDetails> types =

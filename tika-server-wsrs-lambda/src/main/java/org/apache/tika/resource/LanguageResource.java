@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

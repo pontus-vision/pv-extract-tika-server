@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -41,6 +41,7 @@ import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 
 import org.apache.tika.Tika;
 import org.apache.tika.server.core.HTMLHelper;
+import org.apache.tika.server.core.TikaResource;
 
 /**
  * <p>Provides a basic welcome to the Apache Tika Server.</p>
@@ -66,7 +67,7 @@ public class TikaWelcome {
     private List<Class<?>> endpoints = new LinkedList<>();
 
     public TikaWelcome(List<ResourceProvider> rCoreProviders) {
-        this.tika = new Tika(com.pontusvision.tika.resource.TikaResource.getConfig());
+        this.tika = new Tika(TikaResource.getConfig());
         this.html = new HTMLHelper();
         for (ResourceProvider rp : rCoreProviders) {
             this.endpoints.add(rp.getResourceClass());
@@ -129,7 +130,7 @@ public class TikaWelcome {
     @GET
     @Produces("text/html")
     public String getWelcomeHTML() {
-        com.pontusvision.tika.resource.TikaResource.checkIsOperating();
+        TikaResource.checkIsOperating();
 
         StringBuffer h = new StringBuffer();
         String tikaVersion = tika.toString();

@@ -1,4 +1,4 @@
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -37,6 +37,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.tika.server.core.TikaResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

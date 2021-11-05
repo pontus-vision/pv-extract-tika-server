@@ -1,4 +1,4 @@
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more

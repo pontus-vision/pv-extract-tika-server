@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.pontusvision.tika.server.core;
+package org.apache.tika.server.core;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.pontusvision.tika.resource.*;
+import org.apache.tika.resource.*;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -44,7 +44,6 @@ import org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter;
 import org.apache.cxf.service.factory.ServiceConstructionException;
 import org.apache.cxf.transport.common.gzip.GZIPInInterceptor;
 import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
-import org.apache.tika.server.core.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -59,9 +58,9 @@ import org.apache.tika.parser.digestutils.CommonsDigester;
 import org.apache.tika.pipes.emitter.EmitterManager;
 import org.apache.tika.pipes.fetcher.FetcherManager;
 import org.apache.tika.server.core.resource.PipesResource;
-import com.pontusvision.tika.resource.RecursiveMetadataResource;
-import com.pontusvision.tika.resource.TikaParsers;
-import com.pontusvision.tika.resource.TranslateResource;
+import org.apache.tika.resource.RecursiveMetadataResource;
+import org.apache.tika.resource.TikaParsers;
+import org.apache.tika.resource.TranslateResource;
 import org.apache.tika.server.core.writer.CSVMessageBodyWriter;
 import org.apache.tika.server.core.writer.JSONMessageBodyWriter;
 import org.apache.tika.server.core.writer.JSONObjWriter;
@@ -102,7 +101,7 @@ public class PVTikaServerProcess {
 
   public static void main(String[] args) throws Exception {
     LOG.info("Starting {} server", new Tika());
-    com.pontusvision.tika.resource.AsyncResource asyncResource = null;
+    org.apache.tika.resource.AsyncResource asyncResource = null;
     try {
       Options options = getOptions();
       CommandLineParser cliParser = new DefaultParser();
@@ -110,8 +109,8 @@ public class PVTikaServerProcess {
       TikaServerConfig tikaServerConfig = TikaServerConfig.load(line);
       LOG.debug("forked config: {}", tikaServerConfig);
       if (tikaServerConfig.isEnableUnsecureFeatures()) {
-        final com.pontusvision.tika.resource.AsyncResource localAsyncResource =
-            new com.pontusvision.tika.resource.AsyncResource(tikaServerConfig.getConfigPath(),Collections.EMPTY_SET );
+        final org.apache.tika.resource.AsyncResource localAsyncResource =
+            new org.apache.tika.resource.AsyncResource(tikaServerConfig.getConfigPath(),Collections.EMPTY_SET );
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
           try {
             localAsyncResource.shutdownNow();
@@ -146,7 +145,7 @@ public class PVTikaServerProcess {
 
   //This returns the server, configured and ready to be started.
   private static ServerDetails initServer(TikaServerConfig tikaServerConfig,
-                                          com.pontusvision.tika.resource.AsyncResource asyncResource) throws Exception {
+                                          org.apache.tika.resource.AsyncResource asyncResource) throws Exception {
     String host = tikaServerConfig.getHost();
     int[] ports = tikaServerConfig.getPorts();
     if (ports.length > 1) {
@@ -217,7 +216,7 @@ public class PVTikaServerProcess {
 
       serverThread.start();
     }
-    com.pontusvision.tika.resource.TikaResource.init(tika, tikaServerConfig, digester, inputStreamFactory, serverStatus);
+    TikaResource.init(tika, tikaServerConfig, digester, inputStreamFactory, serverStatus);
     JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
 
     List<ResourceProvider> resourceProviders = new ArrayList<>();
@@ -304,24 +303,24 @@ public class PVTikaServerProcess {
     boolean addAsyncResource = false;
     boolean addPipesResource = false;
     if (tikaServerConfig.getEndpoints().size() == 0) {
-      resourceProviders.add(new SingletonResourceProvider(new com.pontusvision.tika.resource.MetadataResource()));
+      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.MetadataResource()));
       resourceProviders.add(new SingletonResourceProvider(new RecursiveMetadataResource()));
       resourceProviders
-          .add(new SingletonResourceProvider(new com.pontusvision.tika.resource.DetectorResource(serverStatus)));
-      resourceProviders.add(new SingletonResourceProvider(new com.pontusvision.tika.resource.LanguageResource()));
+          .add(new SingletonResourceProvider(new org.apache.tika.resource.DetectorResource(serverStatus)));
+      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.LanguageResource()));
       resourceProviders
           .add(new SingletonResourceProvider(new TranslateResource(serverStatus)));
-      resourceProviders.add(new SingletonResourceProvider(new com.pontusvision.tika.resource.TikaResource()));
-      resourceProviders.add(new SingletonResourceProvider(new com.pontusvision.tika.resource.UnpackerResource()));
-      resourceProviders.add(new SingletonResourceProvider(new com.pontusvision.tika.resource.TikaMimeTypes()));
-      resourceProviders.add(new SingletonResourceProvider(new com.pontusvision.tika.resource.TikaDetectors()));
+      resourceProviders.add(new SingletonResourceProvider(new TikaResource()));
+      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.UnpackerResource()));
+      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.TikaMimeTypes()));
+      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.TikaDetectors()));
       resourceProviders.add(new SingletonResourceProvider(new TikaParsers()));
-      resourceProviders.add(new SingletonResourceProvider(new com.pontusvision.tika.resource.TikaVersion()));
+      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.TikaVersion()));
       if (tikaServerConfig.isEnableUnsecureFeatures()) {
         addAsyncResource = true;
         addPipesResource = true;
         resourceProviders
-            .add(new SingletonResourceProvider(new com.pontusvision.tika.resource.TikaServerStatus(serverStatus)));
+            .add(new SingletonResourceProvider(new org.apache.tika.resource.TikaServerStatus(serverStatus)));
       }
     } else {
       for (String endPoint : tikaServerConfig.getEndpoints()) {
@@ -358,7 +357,7 @@ public class PVTikaServerProcess {
     }
 
     if (addAsyncResource) {
-      final com.pontusvision.tika.resource.AsyncResource localAsyncResource = new AsyncResource(tikaServerConfig.getConfigPath(), Collections.EMPTY_SET);
+      final org.apache.tika.resource.AsyncResource localAsyncResource = new AsyncResource(tikaServerConfig.getConfigPath(), Collections.EMPTY_SET);
       Runtime.getRuntime().addShutdownHook(new Thread(() -> {
         try {
           localAsyncResource.shutdownNow();
@@ -445,9 +444,9 @@ public class PVTikaServerProcess {
   }
 
   private static Collection<? extends ResourceProvider> loadResourceServices() {
-    List<com.pontusvision.tika.resource.TikaServerResource> resources =
+    List<org.apache.tika.resource.TikaServerResource> resources =
         new ServiceLoader(TikaServerProcess.class.getClassLoader())
-            .loadServiceProviders(com.pontusvision.tika.resource.TikaServerResource.class);
+            .loadServiceProviders(org.apache.tika.resource.TikaServerResource.class);
     List<ResourceProvider> providers = new ArrayList<>();
 
     for (TikaServerResource r : resources) {

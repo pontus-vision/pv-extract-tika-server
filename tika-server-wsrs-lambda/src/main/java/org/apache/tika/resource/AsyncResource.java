@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -98,7 +98,7 @@ public class AsyncResource {
     public Map<String, Object> post(InputStream is, @Context HttpHeaders httpHeaders,
                                     @Context UriInfo info) throws Exception {
 
-        com.pontusvision.tika.resource.AsyncRequest request = deserializeASyncRequest(is);
+        org.apache.tika.resource.AsyncRequest request = deserializeASyncRequest(is);
 
         //make sure that there are no problems with
         //the requested fetchers and emitters
@@ -142,7 +142,7 @@ public class AsyncResource {
         throw new BadRequestException("can't find fetcher for " + fetchKey.getFetcherName());
     }
 
-    private com.pontusvision.tika.resource.AsyncRequest deserializeASyncRequest(InputStream is) throws IOException {
+    private org.apache.tika.resource.AsyncRequest deserializeASyncRequest(InputStream is) throws IOException {
         try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
             return new AsyncRequest(JsonFetchEmitTupleList.fromJson(reader));
         }

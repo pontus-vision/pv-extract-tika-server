@@ -14,20 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
-import java.util.List;
-
-import org.apache.tika.pipes.FetchEmitTuple;
-
-public class AsyncRequest {
-    private final List<FetchEmitTuple> tuples;
-
-    public AsyncRequest(List<FetchEmitTuple> tuples) {
-        this.tuples = tuples;
-    }
-
-    public List<FetchEmitTuple> getTuples() {
-        return tuples;
-    }
+/**
+ * Stub interface to allow for loading of resources via SPI
+ */
+public interface TikaServerResource {
 }

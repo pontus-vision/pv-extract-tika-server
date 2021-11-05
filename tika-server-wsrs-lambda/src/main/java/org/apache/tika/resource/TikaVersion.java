@@ -14,10 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
-/**
- * Stub interface to allow for loading of resources via SPI
- */
-public interface TikaServerResource {
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
+import org.apache.tika.Tika;
+import org.apache.tika.server.core.TikaResource;
+
+@Path("/version")
+public class TikaVersion {
+    private Tika tika;
+
+    public TikaVersion() {
+        this.tika = new Tika(TikaResource.getConfig());
+    }
+
+    @GET
+    @Produces("text/plain")
+    public String getVersion() {
+        TikaResource.checkIsOperating();
+        return tika.toString();
+    }
 }

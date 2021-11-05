@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static com.pontusvision.tika.resource.TikaResource.fillMetadata;
-import static com.pontusvision.tika.resource.TikaResource.fillParseContext;
+import static org.apache.tika.server.core.TikaResource.fillMetadata;
+import static org.apache.tika.server.core.TikaResource.fillParseContext;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -46,6 +46,7 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.tika.server.core.TikaResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
@@ -95,7 +96,7 @@ public class UnpackerResource {
     @Produces({"application/zip", "application/x-tar"})
     public Map<String, byte[]> unpack(InputStream is, @Context HttpHeaders httpHeaders,
                                       @Context UriInfo info) throws Exception {
-        return process(com.pontusvision.tika.resource.TikaResource.getInputStream(is, new Metadata(), httpHeaders), httpHeaders,
+        return process(TikaResource.getInputStream(is, new Metadata(), httpHeaders), httpHeaders,
                 info, false);
     }
 
@@ -104,7 +105,7 @@ public class UnpackerResource {
     @Produces({"application/zip", "application/x-tar"})
     public Map<String, byte[]> unpackAll(InputStream is, @Context HttpHeaders httpHeaders,
                                          @Context UriInfo info) throws Exception {
-        return process(com.pontusvision.tika.resource.TikaResource.getInputStream(is, new Metadata(), httpHeaders), httpHeaders,
+        return process(TikaResource.getInputStream(is, new Metadata(), httpHeaders), httpHeaders,
                 info, true);
     }
 
@@ -113,7 +114,7 @@ public class UnpackerResource {
         Metadata metadata = new Metadata();
         ParseContext pc = new ParseContext();
 
-        Parser parser = com.pontusvision.tika.resource.TikaResource.createParser();
+        Parser parser = TikaResource.createParser();
         if (parser instanceof DigestingParser) {
             //no need to digest for unwrapping
             parser = ((DigestingParser) parser).getWrappedParser();
@@ -121,7 +122,7 @@ public class UnpackerResource {
         fillMetadata(parser, metadata, httpHeaders.getRequestHeaders());
         fillParseContext(httpHeaders.getRequestHeaders(), metadata, pc);
 
-        com.pontusvision.tika.resource.TikaResource.logRequest(LOG, "/unpack", metadata);
+        TikaResource.logRequest(LOG, "/unpack", metadata);
         //even though we aren't currently parsing embedded documents,
         //we need to add this to allow for "inline" use of other parsers.
         pc.set(Parser.class, parser);
@@ -139,7 +140,7 @@ public class UnpackerResource {
         MutableInt count = new MutableInt();
 
         pc.set(EmbeddedDocumentExtractor.class, new MyEmbeddedDocumentExtractor(count, files));
-        com.pontusvision.tika.resource.TikaResource.parse(parser, LOG, info.getPath(), is, ch, metadata, pc);
+        TikaResource.parse(parser, LOG, info.getPath(), is, ch, metadata, pc);
 
         if (count.intValue() == 0 && !saveAll) {
             throw new WebApplicationException(Response.Status.NO_CONTENT);

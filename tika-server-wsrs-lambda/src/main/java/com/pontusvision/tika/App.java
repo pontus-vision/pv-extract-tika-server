@@ -2,7 +2,7 @@ package com.pontusvision.tika;
 
 //import com.netflix.astyanax.connectionpool.exceptions.ThrottledException;
 
-import com.pontusvision.tika.server.core.PVTikaServerProcess;
+import org.apache.tika.server.core.PVTikaServerProcess;
 import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
@@ -10,7 +10,7 @@ import org.apache.tika.parser.DigestingParser;
 import org.apache.tika.parser.digestutils.BouncyCastleDigester;
 import org.apache.tika.parser.digestutils.CommonsDigester;
 import org.apache.tika.server.core.*;
-import com.pontusvision.tika.resource.TikaResource;
+import org.apache.tika.server.core.TikaResource;
 import org.apache.tika.utils.StringUtils;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -80,7 +80,11 @@ public class App // implements RequestStreamHandler
     Server server = new Server(port);
     ResourceConfig config = new ResourceConfig();
 
-    config.packages("com.pontusvision.tika", "com.pontusvision.security", "com.pontusvision.tika.resource");
+    config.packages("com.pontusvision.tika",
+         "com.pontusvision.security",
+        "org.apache.tika.resource");
+    config.registerClasses(org.apache.tika.server.core.TikaResource.class,
+        org.apache.tika.server.core.PVTikaServerProcess.class);
     ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 
     ServletContextHandler context = new ServletContextHandler(server, "/*");

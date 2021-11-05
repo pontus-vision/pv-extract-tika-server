@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tika.detect.CompositeDetector;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.server.core.HTMLHelper;
+import org.apache.tika.server.core.TikaResource;
 
 /**
  * <p>Provides details of all the {@link Detector}s registered with
@@ -49,7 +50,7 @@ public class TikaDetectors {
     public String getDectorsHTML() {
         StringBuffer h = new StringBuffer();
         html.generateHeader(h, "Detectors available to Apache Tika");
-        detectorAsHTML(com.pontusvision.tika.resource.TikaResource.getConfig().getDetector(), h, 2);
+        detectorAsHTML(TikaResource.getConfig().getDetector(), h, 2);
         html.generateFooter(h);
         return h.toString();
     }
@@ -78,7 +79,7 @@ public class TikaDetectors {
     @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
     public String getDetectorsJSON() throws IOException {
         Map<String, Object> details = new HashMap<>();
-        detectorAsMap(com.pontusvision.tika.resource.TikaResource.getConfig().getDetector(), details);
+        detectorAsMap(TikaResource.getConfig().getDetector(), details);
         return new ObjectMapper().writeValueAsString(details);
     }
 

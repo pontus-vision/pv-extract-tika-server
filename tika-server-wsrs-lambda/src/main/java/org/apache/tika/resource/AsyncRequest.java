@@ -14,26 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import java.util.List;
 
-import org.apache.tika.Tika;
+import org.apache.tika.pipes.FetchEmitTuple;
 
-@Path("/version")
-public class TikaVersion {
-    private Tika tika;
+public class AsyncRequest {
+    private final List<FetchEmitTuple> tuples;
 
-    public TikaVersion() {
-        this.tika = new Tika(TikaResource.getConfig());
+    public AsyncRequest(List<FetchEmitTuple> tuples) {
+        this.tuples = tuples;
     }
 
-    @GET
-    @Produces("text/plain")
-    public String getVersion() {
-        TikaResource.checkIsOperating();
-        return tika.toString();
+    public List<FetchEmitTuple> getTuples() {
+        return tuples;
     }
 }

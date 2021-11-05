@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
-import static com.pontusvision.tika.resource.TikaResource.fillMetadata;
-import static com.pontusvision.tika.resource.TikaResource.fillParseContext;
+import static org.apache.tika.server.core.TikaResource.fillMetadata;
+import static org.apache.tika.server.core.TikaResource.fillParseContext;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +35,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
+import org.apache.tika.server.core.TikaResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +66,7 @@ public class MetadataResource {
                                 @Context UriInfo info) throws Exception {
         Metadata metadata = new Metadata();
         return Response
-                .ok(parseMetadata(com.pontusvision.tika.resource.TikaResource.getInputStream(is, metadata, httpHeaders), metadata,
+                .ok(parseMetadata(TikaResource.getInputStream(is, metadata, httpHeaders), metadata,
                         httpHeaders.getRequestHeaders(), info)).build();
     }
 
@@ -105,7 +106,7 @@ public class MetadataResource {
         Metadata metadata = new Metadata();
         boolean success = false;
         try {
-            parseMetadata(com.pontusvision.tika.resource.TikaResource.getInputStream(is, metadata, httpHeaders), metadata,
+            parseMetadata(TikaResource.getInputStream(is, metadata, httpHeaders), metadata,
                     httpHeaders.getRequestHeaders(), info);
             // once we've parsed the document successfully, we should use NOT_FOUND
             // if we did not see the field
@@ -133,13 +134,13 @@ public class MetadataResource {
                                      MultivaluedMap<String, String> httpHeaders, UriInfo info)
             throws IOException {
         final ParseContext context = new ParseContext();
-        Parser parser = com.pontusvision.tika.resource.TikaResource.createParser();
+        Parser parser = TikaResource.createParser();
         fillMetadata(parser, metadata, httpHeaders);
         fillParseContext(httpHeaders, metadata, context);
         //no need to parse embedded docs
         context.set(DocumentSelector.class, metadata1 -> false);
 
-        com.pontusvision.tika.resource.TikaResource.logRequest(LOG, "/meta", metadata);
+        TikaResource.logRequest(LOG, "/meta", metadata);
         TikaResource.parse(parser, LOG, info.getPath(), is, new LanguageHandler() {
             public void endDocument() {
                 metadata.set("language", getLanguage().getLanguage());

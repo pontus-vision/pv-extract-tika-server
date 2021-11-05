@@ -1,4 +1,4 @@
-package com.pontusvision.tika.resource;
+package org.apache.tika.resource;
 
 
 import javax.ws.rs.WebApplicationException;
