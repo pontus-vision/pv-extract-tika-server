@@ -29,7 +29,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.tika.server.core.TikaResource;
+import org.apache.tika.server.core.resource.TikaResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

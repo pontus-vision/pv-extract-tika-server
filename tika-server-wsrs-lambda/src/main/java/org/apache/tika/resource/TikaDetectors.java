@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tika.detect.CompositeDetector;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.server.core.HTMLHelper;
-import org.apache.tika.server.core.TikaResource;
+import org.apache.tika.server.core.resource.TikaResource;
 
 /**
  * <p>Provides details of all the {@link Detector}s registered with

@@ -27,7 +27,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.UriInfo;
 
-import org.apache.tika.server.core.TikaResource;
+import org.apache.tika.server.core.resource.TikaResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

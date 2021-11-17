@@ -10,7 +10,7 @@ import org.apache.tika.parser.DigestingParser;
 import org.apache.tika.parser.digestutils.BouncyCastleDigester;
 import org.apache.tika.parser.digestutils.CommonsDigester;
 import org.apache.tika.server.core.*;
-import org.apache.tika.server.core.TikaResource;
+import org.apache.tika.server.core.resource.TikaResource;
 import org.apache.tika.utils.StringUtils;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -83,7 +83,7 @@ public class App // implements RequestStreamHandler
     config.packages("com.pontusvision.tika",
          "com.pontusvision.security",
         "org.apache.tika.resource");
-    config.registerClasses(org.apache.tika.server.core.TikaResource.class,
+    config.registerClasses(TikaResource.class,
         org.apache.tika.server.core.PVTikaServerProcess.class);
     ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 

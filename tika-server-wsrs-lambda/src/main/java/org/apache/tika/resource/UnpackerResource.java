@@ -18,8 +18,8 @@
 package org.apache.tika.resource;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.tika.server.core.TikaResource.fillMetadata;
-import static org.apache.tika.server.core.TikaResource.fillParseContext;
+import static org.apache.tika.server.core.resource.TikaResource.fillMetadata;
+import static org.apache.tika.server.core.resource.TikaResource.fillParseContext;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -46,7 +46,7 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.tika.server.core.TikaResource;
+import org.apache.tika.server.core.resource.TikaResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.tika.server.core;
+package org.apache.tika.server.core.resource;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -51,6 +51,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.attachment.ContentDisposition;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.impl.MetadataMap;
+import org.apache.tika.server.core.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;

@@ -22,7 +22,27 @@ RUN mvn -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTra
 
 
 FROM public.ecr.aws/lambda/java:8 as FINAL
-RUN yum -y update 
+RUN yum -y update && \
+    uname -a && \
+    yum install -y epel-release
+#    yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+#RUN yum install -y \
+#        http://mirror.centos.org/centos/7/os/x86_64/Packages/libgs-9.25-5.el7.x86_64.rpm \
+#        http://mirror.centos.org/centos/7/os/x86_64/Packages/libgs-devel-9.25-5.el7.x86_64.rpm
+RUN yum remove -y \
+        ImageMagick \
+        cups-libs \
+        cairo
+
+RUN yum install -y \
+       	http://mirror.centos.org/centos/7/os/x86_64/Packages/cairo-1.15.12-4.el7.x86_64.rpm \
+        http://mirror.centos.org/centos/7/os/x86_64/Packages/libpng-1.5.13-8.el7.x86_64.rpm \
+        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/leptonica-1.72-2.el7.x86_64.rpm \
+        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/leptonica-devel-1.72-2.el7.x86_64.rpm \
+        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-3.04.00-3.el7.x86_64.rpm \
+        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-langpack-por-3.04.00-3.el7.noarch.rpm \
+        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-langpack-spa-3.04.00-3.el7.noarch.rpm 
+
 
 ARG LAMBDA_TASK_ROOT=/var/task
 ENV LAMBDA_TASK_ROOT=${DOLLAR}{LAMBDA_TASK_ROOT}

@@ -44,6 +44,8 @@ import org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter;
 import org.apache.cxf.service.factory.ServiceConstructionException;
 import org.apache.cxf.transport.common.gzip.GZIPInInterceptor;
 import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
+import org.apache.tika.server.core.resource.TikaResource;
+import org.apache.tika.server.core.resource.TikaVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -315,7 +317,7 @@ public class PVTikaServerProcess {
       resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.TikaMimeTypes()));
       resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.TikaDetectors()));
       resourceProviders.add(new SingletonResourceProvider(new TikaParsers()));
-      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.TikaVersion()));
+      resourceProviders.add(new SingletonResourceProvider(new TikaVersion()));
       if (tikaServerConfig.isEnableUnsecureFeatures()) {
         addAsyncResource = true;
         addPipesResource = true;

@@ -34,7 +34,7 @@ import org.apache.tika.mime.MediaTypeRegistry;
 import org.apache.tika.parser.CompositeParser;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.server.core.HTMLHelper;
-import org.apache.tika.server.core.TikaResource;
+import org.apache.tika.server.core.resource.TikaResource;
 
 /**
  * <p>Provides details of all the mimetypes known to Apache Tika,

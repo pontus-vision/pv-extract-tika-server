@@ -17,8 +17,8 @@
 
 package org.apache.tika.resource;
 
-import static org.apache.tika.server.core.TikaResource.fillMetadata;
-import static org.apache.tika.server.core.TikaResource.fillParseContext;
+import static org.apache.tika.server.core.resource.TikaResource.fillMetadata;
+import static org.apache.tika.server.core.resource.TikaResource.fillParseContext;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +35,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-import org.apache.tika.server.core.TikaResource;
+import org.apache.tika.server.core.resource.TikaResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

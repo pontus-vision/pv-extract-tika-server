@@ -41,7 +41,7 @@ import org.apache.cxf.jaxrs.lifecycle.ResourceProvider;
 
 import org.apache.tika.Tika;
 import org.apache.tika.server.core.HTMLHelper;
-import org.apache.tika.server.core.TikaResource;
+import org.apache.tika.server.core.resource.TikaResource;
 
 /**
  * <p>Provides a basic welcome to the Apache Tika Server.</p>
