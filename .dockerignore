@@ -1,3 +1,4 @@
+tika-server-wsrs-lambda/target/
 build-docker-lambda.sh
 run-lambda-locally.sh
 test-api-call.sh

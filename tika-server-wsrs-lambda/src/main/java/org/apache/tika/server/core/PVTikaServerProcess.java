@@ -29,7 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.tika.resource.*;
+//import org.apache.tika.resource.*;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -44,8 +44,7 @@ import org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter;
 import org.apache.cxf.service.factory.ServiceConstructionException;
 import org.apache.cxf.transport.common.gzip.GZIPInInterceptor;
 import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
-import org.apache.tika.server.core.resource.TikaResource;
-import org.apache.tika.server.core.resource.TikaVersion;
+import org.apache.tika.server.core.resource.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -59,10 +58,9 @@ import org.apache.tika.parser.digestutils.BouncyCastleDigester;
 import org.apache.tika.parser.digestutils.CommonsDigester;
 import org.apache.tika.pipes.emitter.EmitterManager;
 import org.apache.tika.pipes.fetcher.FetcherManager;
-import org.apache.tika.server.core.resource.PipesResource;
-import org.apache.tika.resource.RecursiveMetadataResource;
-import org.apache.tika.resource.TikaParsers;
-import org.apache.tika.resource.TranslateResource;
+//import org.apache.tika.resource.RecursiveMetadataResource;
+//import org.apache.tika.resource.TikaParsers;
+//import org.apache.tika.resource.TranslateResource;
 import org.apache.tika.server.core.writer.CSVMessageBodyWriter;
 import org.apache.tika.server.core.writer.JSONMessageBodyWriter;
 import org.apache.tika.server.core.writer.JSONObjWriter;
@@ -103,7 +101,7 @@ public class PVTikaServerProcess {
 
   public static void main(String[] args) throws Exception {
     LOG.info("Starting {} server", new Tika());
-    org.apache.tika.resource.AsyncResource asyncResource = null;
+    AsyncResource asyncResource = null;
     try {
       Options options = getOptions();
       CommandLineParser cliParser = new DefaultParser();
@@ -111,8 +109,8 @@ public class PVTikaServerProcess {
       TikaServerConfig tikaServerConfig = TikaServerConfig.load(line);
       LOG.debug("forked config: {}", tikaServerConfig);
       if (tikaServerConfig.isEnableUnsecureFeatures()) {
-        final org.apache.tika.resource.AsyncResource localAsyncResource =
-            new org.apache.tika.resource.AsyncResource(tikaServerConfig.getConfigPath(),Collections.EMPTY_SET );
+        final AsyncResource localAsyncResource =
+            new AsyncResource(tikaServerConfig.getConfigPath(),Collections.EMPTY_SET );
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
           try {
             localAsyncResource.shutdownNow();
@@ -147,7 +145,7 @@ public class PVTikaServerProcess {
 
   //This returns the server, configured and ready to be started.
   private static ServerDetails initServer(TikaServerConfig tikaServerConfig,
-                                          org.apache.tika.resource.AsyncResource asyncResource) throws Exception {
+                                          AsyncResource asyncResource) throws Exception {
     String host = tikaServerConfig.getHost();
     int[] ports = tikaServerConfig.getPorts();
     if (ports.length > 1) {
@@ -305,24 +303,24 @@ public class PVTikaServerProcess {
     boolean addAsyncResource = false;
     boolean addPipesResource = false;
     if (tikaServerConfig.getEndpoints().size() == 0) {
-      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.MetadataResource()));
+      resourceProviders.add(new SingletonResourceProvider(new MetadataResource()));
       resourceProviders.add(new SingletonResourceProvider(new RecursiveMetadataResource()));
       resourceProviders
-          .add(new SingletonResourceProvider(new org.apache.tika.resource.DetectorResource(serverStatus)));
-      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.LanguageResource()));
+          .add(new SingletonResourceProvider(new DetectorResource(serverStatus)));
+      resourceProviders.add(new SingletonResourceProvider(new LanguageResource()));
       resourceProviders
           .add(new SingletonResourceProvider(new TranslateResource(serverStatus)));
       resourceProviders.add(new SingletonResourceProvider(new TikaResource()));
-      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.UnpackerResource()));
-      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.TikaMimeTypes()));
-      resourceProviders.add(new SingletonResourceProvider(new org.apache.tika.resource.TikaDetectors()));
+      resourceProviders.add(new SingletonResourceProvider(new UnpackerResource()));
+      resourceProviders.add(new SingletonResourceProvider(new TikaMimeTypes()));
+      resourceProviders.add(new SingletonResourceProvider(new TikaDetectors()));
       resourceProviders.add(new SingletonResourceProvider(new TikaParsers()));
       resourceProviders.add(new SingletonResourceProvider(new TikaVersion()));
       if (tikaServerConfig.isEnableUnsecureFeatures()) {
         addAsyncResource = true;
         addPipesResource = true;
         resourceProviders
-            .add(new SingletonResourceProvider(new org.apache.tika.resource.TikaServerStatus(serverStatus)));
+            .add(new SingletonResourceProvider(new TikaServerStatus(serverStatus)));
       }
     } else {
       for (String endPoint : tikaServerConfig.getEndpoints()) {
@@ -359,7 +357,7 @@ public class PVTikaServerProcess {
     }
 
     if (addAsyncResource) {
-      final org.apache.tika.resource.AsyncResource localAsyncResource = new AsyncResource(tikaServerConfig.getConfigPath(), Collections.EMPTY_SET);
+      final AsyncResource localAsyncResource = new AsyncResource(tikaServerConfig.getConfigPath(), Collections.EMPTY_SET);
       Runtime.getRuntime().addShutdownHook(new Thread(() -> {
         try {
           localAsyncResource.shutdownNow();
@@ -446,9 +444,9 @@ public class PVTikaServerProcess {
   }
 
   private static Collection<? extends ResourceProvider> loadResourceServices() {
-    List<org.apache.tika.resource.TikaServerResource> resources =
+    List<TikaServerResource> resources =
         new ServiceLoader(TikaServerProcess.class.getClassLoader())
-            .loadServiceProviders(org.apache.tika.resource.TikaServerResource.class);
+            .loadServiceProviders(TikaServerResource.class);
     List<ResourceProvider> providers = new ArrayList<>();
 
     for (TikaServerResource r : resources) {
