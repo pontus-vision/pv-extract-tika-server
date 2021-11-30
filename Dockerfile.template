@@ -34,14 +34,28 @@ RUN yum remove -y \
         cups-libs \
         cairo
 
-RUN yum install -y \
-       	http://mirror.centos.org/centos/7/os/x86_64/Packages/cairo-1.15.12-4.el7.x86_64.rpm \
-        http://mirror.centos.org/centos/7/os/x86_64/Packages/libpng-1.5.13-8.el7.x86_64.rpm \
-        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/leptonica-1.72-2.el7.x86_64.rpm \
-        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/leptonica-devel-1.72-2.el7.x86_64.rpm \
-        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-3.04.00-3.el7.x86_64.rpm \
-        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-langpack-por-3.04.00-3.el7.noarch.rpm \
-        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-langpack-spa-3.04.00-3.el7.noarch.rpm 
+#RUN yum install -y \
+#       	http://mirror.centos.org/centos/7/os/x86_64/Packages/cairo-1.15.12-4.el7.x86_64.rpm \
+#        http://mirror.centos.org/centos/7/os/x86_64/Packages/libpng-1.5.13-8.el7.x86_64.rpm \
+#        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/leptonica-1.72-2.el7.x86_64.rpm \
+#        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/leptonica-devel-1.72-2.el7.x86_64.rpm \
+#        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-3.04.00-3.el7.x86_64.rpm \
+#        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-langpack-por-3.04.00-3.el7.noarch.rpm \
+#        https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tesseract-langpack-spa-3.04.00-3.el7.noarch.rpm
+
+RUN yum install -y yum-utils && \
+    yum-config-manager --add-repo https://download.opensuse.org/repositories/home:/Alexander_Pozdnyakov/CentOS_7/ && \
+    rpm --import https://build.opensuse.org/projects/home:Alexander_Pozdnyakov/public_key && \
+    yum update && \
+    yum install -y  \
+                   http://mirror.centos.org/centos/7/os/x86_64/Packages/cairo-1.15.12-4.el7.x86_64.rpm \
+                   http://mirror.centos.org/centos/7/os/x86_64/Packages/libpng-1.5.13-8.el7.x86_64.rpm \
+                   tesseract  \
+                   tesseract-langpack-eng \
+                   tesseract-langpack-por \
+                   tesseract-langpack-spa
+
+
 
 
 ARG LAMBDA_TASK_ROOT=/var/task
