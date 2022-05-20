@@ -33,7 +33,7 @@
         <tika-server-version>2.0.0</tika-server-version>
         <cxf-version>3.4.4</cxf-version>
         <commons-math3.version>3.6.1</commons-math3.version>
-        <gson.version>2.8.6</gson.version>
+        <gson.version>2.8.9</gson.version>
         <json.version>20210307</json.version>
         <log4j-api.version>2.17.1</log4j-api.version>
         <jhades.version>1.0.4</jhades.version>
