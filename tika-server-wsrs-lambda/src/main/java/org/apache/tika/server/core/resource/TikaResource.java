@@ -22,6 +22,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,6 +48,7 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.attachment.ContentDisposition;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
@@ -74,7 +76,7 @@ import org.apache.tika.sax.ExpandedTitleContentHandler;
 import org.apache.tika.sax.RichTextContentHandler;
 import org.apache.tika.sax.boilerpipe.BoilerpipeContentHandler;
 import org.apache.tika.utils.ExceptionUtils;
-import sun.misc.BASE64Decoder;
+// import sun.misc.BASE64Decoder;
 
 @Path("/tika")
 public class TikaResource {
@@ -113,7 +115,7 @@ public class TikaResource {
         final Parser parser = new AutoDetectParser(tikaConfig);
 
         if (digester != null) {
-            return new DigestingParser(parser, digester);
+            return new DigestingParser(parser, digester, false);
         }
         return parser;
     }
@@ -334,7 +336,7 @@ public class TikaResource {
 
         checkIsOperating();
         String fileName = metadata.get(TikaCoreProperties.RESOURCE_NAME_KEY);
-        long taskId = SERVER_STATUS.start(ServerStatus.TASK.PARSE, fileName);
+        long taskId = SERVER_STATUS.start(ServerStatus.TASK.PARSE, fileName,1000000);
         try {
             parser.parse(inputStream, handler, metadata, parseContext);
         } catch (SAXException e) {
@@ -464,9 +466,10 @@ public class TikaResource {
     @Path("base64")
     public StreamingOutput getTextFromBase64Doc(final InputStream is, @Context HttpHeaders httpHeaders,
                                    @Context final UriInfo info) throws IOException {
-        BASE64Decoder decoder = new BASE64Decoder();
-        byte[] decodedBytes = decoder.decodeBuffer(is);
-        InputStream is2 = new ByteArrayInputStream(decodedBytes);
+        // BASE64Decoder decoder = new BASE64Decoder();
+
+        // byte[] decodedBytes = Base64.getDecoder().decode(is);
+        InputStream is2 = new Base64InputStream(is,true);
 
 
         final Metadata metadata = new Metadata();

@@ -1,0 +1,133 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mcom.pontusvision:tika-server[0;1m >--------------------[m
+[[1;34mINFO[m] [1mBuilding com.pontusvision.tika-server 2.0.0[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:1.3.1:enforce[m [1m(enforce-dependency-convergence)[m @ [36mtika-server[0;1m ---[m
+[[1;33mWARNING[m] 
+Dependency convergence error for com.fasterxml.jackson.core:jackson-core:2.12.4 paths to dependency are:
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-translate:2.0.0
+      +-com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.12.4
+        +-com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.12.4
+          +-com.fasterxml.jackson.core:jackson-core:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-serialization:2.0.0
+      +-com.fasterxml.jackson.core:jackson-core:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.core:jackson-core:2.12.6
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.6
+    +-com.fasterxml.jackson.core:jackson-core:2.12.6
+
+[[1;33mWARNING[m] 
+Dependency convergence error for com.fasterxml.jackson.core:jackson-annotations:2.12.4 paths to dependency are:
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-translate:2.0.0
+      +-com.fasterxml.jackson.core:jackson-annotations:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.core:jackson-annotations:2.12.6
+
+[[1;33mWARNING[m] 
+Dependency convergence error for com.fasterxml.jackson.core:jackson-databind:2.12.4 paths to dependency are:
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-translate:2.0.0
+      +-com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.12.4
+        +-com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.12.4
+          +-com.fasterxml.jackson.core:jackson-databind:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-translate:2.0.0
+      +-com.fasterxml.jackson.core:jackson-databind:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-serialization:2.0.0
+      +-com.fasterxml.jackson.core:jackson-databind:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.core:jackson-databind:2.12.6
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.6
+    +-com.fasterxml.jackson.core:jackson-databind:2.12.6
+
+[[1;33mWARNING[m] Rule 0: org.apache.maven.plugins.enforcer.DependencyConvergence failed with message:
+Failed while enforcing releasability the error(s) are [
+Dependency convergence error for com.fasterxml.jackson.core:jackson-core:2.12.4 paths to dependency are:
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-translate:2.0.0
+      +-com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.12.4
+        +-com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.12.4
+          +-com.fasterxml.jackson.core:jackson-core:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-serialization:2.0.0
+      +-com.fasterxml.jackson.core:jackson-core:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.core:jackson-core:2.12.6
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.6
+    +-com.fasterxml.jackson.core:jackson-core:2.12.6
+, 
+Dependency convergence error for com.fasterxml.jackson.core:jackson-annotations:2.12.4 paths to dependency are:
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-translate:2.0.0
+      +-com.fasterxml.jackson.core:jackson-annotations:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.core:jackson-annotations:2.12.6
+, 
+Dependency convergence error for com.fasterxml.jackson.core:jackson-databind:2.12.4 paths to dependency are:
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-translate:2.0.0
+      +-com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.12.4
+        +-com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.12.4
+          +-com.fasterxml.jackson.core:jackson-databind:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-translate:2.0.0
+      +-com.fasterxml.jackson.core:jackson-databind:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-org.apache.tika:tika-server-core:2.0.0
+    +-org.apache.tika:tika-serialization:2.0.0
+      +-com.fasterxml.jackson.core:jackson-databind:2.12.4
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.core:jackson-databind:2.12.6
+and
++-com.pontusvision:tika-server:2.0.0
+  +-com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.6
+    +-com.fasterxml.jackson.core:jackson-databind:2.12.6
+]
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  4.886 s
+[[1;34mINFO[m] Finished at: 2022-06-16T18:34:08+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-enforcer-plugin:1.3.1:enforce[m [1m(enforce-dependency-convergence)[m on project [36mtika-server[m: [1;31mSome Enforcer rules have failed. Look above for specific messages explaining why the rule failed.[m -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

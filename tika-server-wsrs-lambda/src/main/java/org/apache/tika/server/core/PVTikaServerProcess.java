@@ -309,7 +309,7 @@ public class PVTikaServerProcess {
           .add(new SingletonResourceProvider(new DetectorResource(serverStatus)));
       resourceProviders.add(new SingletonResourceProvider(new LanguageResource()));
       resourceProviders
-          .add(new SingletonResourceProvider(new TranslateResource(serverStatus)));
+          .add(new SingletonResourceProvider(new TranslateResource(serverStatus, 10000000)));
       resourceProviders.add(new SingletonResourceProvider(new TikaResource()));
       resourceProviders.add(new SingletonResourceProvider(new UnpackerResource()));
       resourceProviders.add(new SingletonResourceProvider(new TikaMimeTypes()));
@@ -333,7 +333,7 @@ public class PVTikaServerProcess {
         } else if ("language".equals(endPoint)) {
           resourceProviders.add(new SingletonResourceProvider(new LanguageResource()));
         } else if ("translate".equals(endPoint)) {
-          resourceProviders.add(new SingletonResourceProvider(new TranslateResource(serverStatus)));
+          resourceProviders.add(new SingletonResourceProvider(new TranslateResource(serverStatus, 1000000)));
         } else if ("tika".equals(endPoint)) {
           resourceProviders.add(new SingletonResourceProvider(new TikaResource()));
         } else if ("unpack".equals(endPoint)) {
